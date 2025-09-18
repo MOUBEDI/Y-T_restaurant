@@ -261,46 +261,52 @@
         }
         
         .menu-item {
-            background-color: var(--light);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            background: linear-gradient(135deg, var(--gray) 60%, #fff 100%);
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(21,86,66,0.08);
+            transition: transform 0.25s, box-shadow 0.25s;
+            border: 1px solid #eaeaea;
         }
         
         .menu-item:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(21,86,66,0.14);
+            border-color: var(--accent);
         }
         
         .menu-item-content {
-            padding: 1.5rem;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
         }
         
         .item-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.7rem;
         }
         
         .item-name {
-            font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
         }
         
         .item-price {
-            color: var(--primary);
+            font-size: 1.15rem;
+            color: var(--accent);
             font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
         }
         
         .item-desc {
-            color: #666;
-            margin-bottom: 1rem;
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 0.7rem;
             font-style: italic;
         }
         
         .item-note {
-            color: var(--accent);
-            font-size: 0.9rem;
+            color: var(--primary-light);
+            font-size: 0.95rem;
+            font-weight: 600;
         }
         
         /* About */
@@ -456,6 +462,116 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Drinks Tabs */
+        .drinks-tabs {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            position: relative;
+            background: var(--gray);
+            border-radius: 40px;
+            padding: 0.5rem 0.5rem;
+            box-shadow: 0 2px 8px rgba(21,86,66,0.07);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .drinks-tab-btn {
+            background: none;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--primary);
+            position: relative;
+            transition: background 0.3s, color 0.3s;
+            z-index: 1;
+            outline: none;
+        }
+        .drinks-tab-btn.active {
+            background: var(--primary);
+            color: var(--light);
+            box-shadow: 0 2px 8px rgba(21,86,66,0.12);
+        }
+        .drinks-tab-btn:focus {
+            outline: 2px solid var(--accent);
+        }
+        .drinks-tab-btn:not(.active):hover {
+            background: var(--primary-light);
+            color: var(--light);
+        }
+        /* Add a highlight bar under the active tab */
+        .drinks-tabs::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+            border-radius: 0 0 40px 40px;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        /* Menu items spacing and card effect */
+        .menu-item {
+            background: linear-gradient(135deg, var(--gray) 60%, #fff 100%);
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(21,86,66,0.08);
+            transition: transform 0.25s, box-shadow 0.25s;
+            border: 1px solid #eaeaea;
+        }
+        .menu-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(21,86,66,0.14);
+            border-color: var(--accent);
+        }
+        .menu-item-content {
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+        }
+        .item-header {
+            margin-bottom: 0.7rem;
+        }
+        .item-name {
+            font-size: 1.25rem;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
+        }
+        .item-price {
+            font-size: 1.15rem;
+            color: var(--accent);
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .item-desc {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 0.7rem;
+            font-style: italic;
+        }
+        .item-note {
+            color: var(--primary-light);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        /* Responsive drinks tabs */
+        @media (max-width: 600px) {
+            .drinks-tabs {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                padding: 0.5rem;
+            }
+            .drinks-tab-btn {
+                padding: 0.7rem 1rem;
+                font-size: 0.98rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -538,7 +654,16 @@
                 <button class="category-btn">Burgers</button>
                 <button class="category-btn">Special Menu</button>
                 <button class="category-btn">Main Course</button>
-                <button class="category-btn">Drinks</button>
+                <button class="category-btn" data-tab="drinks">Drinks</button>
+            </div>
+
+            <!-- Drinks Tabs (shown only when Drinks is selected) -->
+            <div class="drinks-tabs" style="display:none; margin-bottom:2rem;" role="tablist" aria-label="Drinks categories">
+                <button class="drinks-tab-btn active" data-drink="cocktails" role="tab" aria-selected="true" aria-controls="cocktails-list">Cocktails</button>
+                <button class="drinks-tab-btn" data-drink="beers" role="tab" aria-selected="false" aria-controls="beers-list">Beers</button>
+                <button class="drinks-tab-btn" data-drink="juice" role="tab" aria-selected="false" aria-controls="juice-list">Juice</button>
+                <button class="drinks-tab-btn" data-drink="coffee" role="tab" aria-selected="false" aria-controls="coffee-list">Coffee & Tea</button>
+                <button class="drinks-tab-btn" data-drink="others" role="tab" aria-selected="false" aria-controls="others-list">Others</button>
             </div>
             
             <div class="menu-items">
@@ -579,6 +704,24 @@
                         <p class="item-desc">Crunchy bread with special tomatoes and olive oil</p>
                     </div>
                 </div>
+                <div class="menu-item" data-category="Appetizers">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Spring Rolls</span>
+                            <span class="item-price">6,000</span>
+                        </div>
+                        <p class="item-desc">Crispy rolls stuffed with veggies and chicken, served with sweet chili sauce</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Appetizers">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Caprese Salad</span>
+                            <span class="item-price">7,500</span>
+                        </div>
+                        <p class="item-desc">Fresh mozzarella, tomatoes, basil, olive oil</p>
+                    </div>
+                </div>
                 <!-- Burgers -->
                 <div class="menu-item" data-category="Burgers" style="display:none;">
                     <div class="menu-item-content">
@@ -614,6 +757,24 @@
                             <span class="item-price">8,000</span>
                         </div>
                         <p class="item-desc">Eggs, tomato sauce, cucumbers, Parmesan</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Burgers" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Double Beef Burger</span>
+                            <span class="item-price">12,000</span>
+                        </div>
+                        <p class="item-desc">Two beef patties, cheddar, lettuce, tomato, house sauce</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Burgers" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Fish Burger</span>
+                            <span class="item-price">10,500</span>
+                        </div>
+                        <p class="item-desc">Crispy fish fillet, tartar sauce, lettuce, tomato</p>
                     </div>
                 </div>
                 <!-- Special Menu -->
@@ -652,6 +813,24 @@
                             <span class="item-price">7,000</span>
                         </div>
                         <p class="item-desc">2 mini brochettes beef with chips</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Special Menu" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Grilled Lamb Chops</span>
+                            <span class="item-price">16,000</span>
+                        </div>
+                        <p class="item-desc">Served with rosemary potatoes and mint sauce</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Special Menu" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Seafood Platter</span>
+                            <span class="item-price">18,000</span>
+                        </div>
+                        <p class="item-desc">Grilled prawns, calamari, fish fillet, tartar sauce</p>
                     </div>
                 </div>
                 <!-- Main Course -->
@@ -701,8 +880,26 @@
                         <span class="item-note">** Preparation requires at least 30 minutes.</span>
                     </div>
                 </div>
-                <!-- Drinks (Cocktails, Teas, etc.) -->
-                <div class="menu-item" data-category="Drinks" style="display:none;">
+                <div class="menu-item" data-category="Main Course" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Vegetarian Pasta</span>
+                            <span class="item-price">9,500</span>
+                        </div>
+                        <p class="item-desc">Penne pasta with seasonal vegetables and tomato sauce</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Main Course" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Grilled Chicken Breast</span>
+                            <span class="item-price">11,000</span>
+                        </div>
+                        <p class="item-desc">Served with steamed vegetables and mashed potatoes</p>
+                    </div>
+                </div>
+                <!-- Drinks: Cocktails -->
+                <div class="menu-item" data-category="Drinks" data-drink="cocktails" style="display:none;">
                     <div class="menu-item-content">
                         <div class="item-header">
                             <span class="item-name">Mojito</span>
@@ -710,7 +907,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="menu-item" data-category="Drinks" style="display:none;">
+                <div class="menu-item" data-category="Drinks" data-drink="cocktails" style="display:none;">
                     <div class="menu-item-content">
                         <div class="item-header">
                             <span class="item-name">Passion Mojito</span>
@@ -718,7 +915,99 @@
                         </div>
                     </div>
                 </div>
-                <!-- Add all other drinks similarly... -->
+                <div class="menu-item" data-category="Drinks" data-drink="cocktails" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Piña Colada</span>
+                            <span class="item-price">10</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more cocktails as needed -->
+
+                <!-- Drinks: Beers -->
+                <div class="menu-item" data-category="Drinks" data-drink="beers" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Primus</span>
+                            <span class="item-price">3</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Drinks" data-drink="beers" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Heineken</span>
+                            <span class="item-price">4</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Drinks" data-drink="beers" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Desperado</span>
+                            <span class="item-price">5</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more beers as needed -->
+
+                <!-- Drinks: Juice -->
+                <div class="menu-item" data-category="Drinks" data-drink="juice" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Fresh Orange Juice</span>
+                            <span class="item-price">4</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Drinks" data-drink="juice" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Fresh Mango Juice</span>
+                            <span class="item-price">4</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more juices as needed -->
+
+                <!-- Drinks: Coffee & Tea -->
+                <div class="menu-item" data-category="Drinks" data-drink="coffee" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Espresso</span>
+                            <span class="item-price">3.5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Drinks" data-drink="coffee" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">African Tea</span>
+                            <span class="item-price">3</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more coffee & tea as needed -->
+
+                <!-- Drinks: Others -->
+                <div class="menu-item" data-category="Drinks" data-drink="others" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Milkshake (Vanilla/Chocolate/Strawberry)</span>
+                            <span class="item-price">5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Drinks" data-drink="others" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Irish Coffee</span>
+                            <span class="item-price">7</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more others as needed -->
             </div>
         </div>
     </section>
@@ -894,15 +1183,42 @@
             // Menu category filtering (event delegation)
             const menuItems = document.querySelectorAll('.menu-item');
             const categories = document.querySelector('.menu-categories');
+            const drinksTabs = document.querySelector('.drinks-tabs');
+            const drinksTabBtns = document.querySelectorAll('.drinks-tab-btn');
+
             categories.addEventListener('click', function(e) {
                 if (e.target.classList.contains('category-btn')) {
                     document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
                     e.target.classList.add('active');
                     const category = e.target.textContent.trim();
-                    menuItems.forEach(item => {
-                        item.style.display = item.getAttribute('data-category') === category ? 'block' : 'none';
-                    });
+
+                    // Show/hide drinks tabs
+                    if (category === 'Drinks') {
+                        drinksTabs.style.display = 'flex';
+                        // Show only the active drinks tab items
+                        const activeDrink = document.querySelector('.drinks-tab-btn.active').dataset.drink;
+                        menuItems.forEach(item => {
+                            item.style.display = (item.getAttribute('data-category') === 'Drinks' && item.getAttribute('data-drink') === activeDrink) ? 'block' : 'none';
+                        });
+                    } else {
+                        drinksTabs.style.display = 'none';
+                        menuItems.forEach(item => {
+                            item.style.display = item.getAttribute('data-category') === category ? 'block' : 'none';
+                        });
+                    }
                 }
+            });
+
+            // Drinks tab filtering
+            drinksTabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    drinksTabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const drinkType = btn.dataset.drink;
+                    menuItems.forEach(item => {
+                        item.style.display = (item.getAttribute('data-category') === 'Drinks' && item.getAttribute('data-drink') === drinkType) ? 'block' : 'none';
+                    });
+                });
             });
 
             // Reservation form popup & validation
@@ -982,7 +1298,15 @@
                 if (e.target === popup) popup.style.display = 'none';
             });
 
-            // ...existing code...
+            // Beer tabs logic
+            document.querySelectorAll('.beer-tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.beer-tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.querySelectorAll('.beer-tab-content').forEach(tab => tab.style.display = 'none');
+                    document.getElementById('beer-' + btn.dataset.beer).style.display = 'block';
+                });
+            });
         });
     </script>
 </body>
