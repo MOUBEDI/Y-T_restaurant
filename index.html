@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y & T Restaurant - Authentic Cuisine & Fine Wines</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #155642;
+            --primary-light: #2a735f;
+            --accent: #d4af37;
+            --light: #ffffff;
+            --dark: #1a1a1a;
+            --gray: #f5f5f5;
+            --text: #333333;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 2rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero Slider */
+        .hero-slider {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide-content {
+            text-align: center;
+            color: var(--light);
+            background-color: rgba(21, 86, 66, 0.85);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 800px;
+        }
+        
+        .slide-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+        
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--light);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .slider-nav {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .slider-dot.active {
+            background-color: var(--light);
+        }
+        
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--accent);
+            bottom: -10px;
+            left: 25%;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Menu */
+        .menu-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .category-btn {
+            background-color: var(--gray);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+        
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .menu-item {
+            display: none;
+        }
+        .menu-item[data-category="Appetizers"] {
+            display: block;
+        }
+        
+        .menu-item {
+            background-color: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .menu-item-content {
+            padding: 1.5rem;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .item-price {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .item-desc {
+            color: #666;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .item-note {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+        
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Reservations */
+        .reservation-form {
+            background-color: var(--gray);
+            padding: 3rem;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+        
+        /* Contact */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-card {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--gray);
+            border-radius: 10px;
+        }
+        
+        .contact-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .map {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav li {
+                margin: 0 0.5rem;
+            }
+            
+            .slide-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">Y<span>&</span>T</a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#reservations">Reservations</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider" id="home">
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');">
+            <div class="slide-content">
+                <h1>Welcome to Y & T</h1>
+                <p>Experience the finest cuisine and wines in Kigali</p>
+                <a href="#reservations" class="btn">Make a Reservation</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');">
+            <div class="slide-content">
+                <h1>Exquisite Dining</h1>
+                <p>Enjoy our carefully crafted menu with the finest ingredients</p>
+                <a href="#menu" class="btn">View Our Menu</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');">
+            <div class="slide-content">
+                <h1>Perfect Wines</h1>
+                <p>Curated by Gatao to complement your dining experience</p>
+                <a href="#menu" class="btn">Explore Our Wines</a>
+            </div>
+        </div>
+        <div class="slider-nav">
+            <div class="slider-dot active"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Story</h2>
+                <p>Discover the passion behind Y & T Restaurant</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Y & T was founded in 2015 with a simple mission: to bring exceptional food and wine to the heart of Kigali. Our name represents the founders, Yves and Theo, whose passion for culinary excellence continues to inspire our team.</p>
+                    <p>We take pride in our innovative approach to traditional recipes, creating dishes that are both familiar and exciting. Our menu changes seasonally to reflect the best available ingredients, with some customer favorites available year-round.</p>
+                    <p>Our wine selection, curated by Gatao, features over 100 varieties from around the world, with a special focus on African vineyards. Whether you're a wine connoisseur or new to wine tasting, our staff can help you find the perfect pairing for your meal.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80" alt="Restaurant Interior">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="section" id="menu" style="background-color: #f9f9f9;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Menu</h2>
+                <p>By Gatao (Wine)</p>
+            </div>
+            
+            <div class="menu-categories">
+                <button class="category-btn active">Appetizers</button>
+                <button class="category-btn">Burgers</button>
+                <button class="category-btn">Special Menu</button>
+                <button class="category-btn">Main Course</button>
+                <button class="category-btn">Drinks</button>
+            </div>
+            
+            <div class="menu-items">
+                <!-- Appetizers -->
+                <div class="menu-item" data-category="Appetizers">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Chef Salad</span>
+                            <span class="item-price">7,000</span>
+                        </div>
+                        <p class="item-desc">Lettuce, carrot, cucumber, onions, tomatoes, red lettuce</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Appetizers">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Chicken Wings</span>
+                            <span class="item-price">8,000</span>
+                        </div>
+                        <p class="item-desc">Served with fries</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Appetizers">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Chicken Fingers</span>
+                            <span class="item-price">8,000</span>
+                        </div>
+                        <p class="item-desc">Served with marinated fries</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Appetizers">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Bruschetta Italian</span>
+                            <span class="item-price">5,000</span>
+                        </div>
+                        <p class="item-desc">Crunchy bread with special tomatoes and olive oil</p>
+                    </div>
+                </div>
+                <!-- Burgers -->
+                <div class="menu-item" data-category="Burgers" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Burger with Caramelized Onions</span>
+                            <span class="item-price">9,500</span>
+                        </div>
+                        <p class="item-desc">Crisp romaine lettuce, shaved Parmesan, house-made sauce</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Burgers" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Authentic Cheese Burger</span>
+                            <span class="item-price">10,000</span>
+                        </div>
+                        <p class="item-desc">Roasted beets, goat cheese, and candied pecan</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Burgers" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Chicken Burger</span>
+                            <span class="item-price">11,500</span>
+                        </div>
+                        <p class="item-desc">Crisp romaine lettuce, Parmesan</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Burgers" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Veggie Burger with Eggs</span>
+                            <span class="item-price">8,000</span>
+                        </div>
+                        <p class="item-desc">Eggs, tomato sauce, cucumbers, Parmesan</p>
+                    </div>
+                </div>
+                <!-- Special Menu -->
+                <div class="menu-item" data-category="Special Menu" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Tenderloin Steak (Approx. 250g)</span>
+                            <span class="item-price">15,000</span>
+                        </div>
+                        <p class="item-desc">Tender filet grilled medium perfection, served with side dish</p>
+                        <span class="item-note">** Preparation requires at least 30 minutes.</span>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Special Menu" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Brochette Beef x 2</span>
+                            <span class="item-price">8,000</span>
+                        </div>
+                        <p class="item-desc">Beef brochettes with secret spices</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Special Menu" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">2 Mini Burgers</span>
+                            <span class="item-price">7,500</span>
+                        </div>
+                        <p class="item-desc">2 mini burgers and those caramelized fries</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Special Menu" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">2 Mini Brochettes</span>
+                            <span class="item-price">7,000</span>
+                        </div>
+                        <p class="item-desc">2 mini brochettes beef with chips</p>
+                    </div>
+                </div>
+                <!-- Main Course -->
+                <div class="menu-item" data-category="Main Course" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Beef Marinated</span>
+                            <span class="item-price">10,000</span>
+                        </div>
+                        <p class="item-desc">Beef medium well cooked with soya sauce at others spices</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Main Course" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Pork Saute</span>
+                            <span class="item-price">12,000</span>
+                        </div>
+                        <p class="item-desc">Tender pork fry with some juicy herbs and veggies</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Main Course" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Chicken Spicy</span>
+                            <span class="item-price">10,000</span>
+                        </div>
+                        <p class="item-desc">French tandoori chicken with betterave sauce</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Main Course" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Goat with Veggies</span>
+                            <span class="item-price">10,000</span>
+                        </div>
+                        <p class="item-desc">Goat with wonderful onion sauce</p>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Main Course" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Full Tilapia</span>
+                            <span class="item-price">12,000</span>
+                        </div>
+                        <p class="item-desc">Juicy tilapia with a tomato sauce</p>
+                        <span class="item-note">** Preparation requires at least 30 minutes.</span>
+                    </div>
+                </div>
+                <!-- Drinks (Cocktails, Teas, etc.) -->
+                <div class="menu-item" data-category="Drinks" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Mojito</span>
+                            <span class="item-price">9</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="Drinks" style="display:none;">
+                    <div class="menu-item-content">
+                        <div class="item-header">
+                            <span class="item-name">Passion Mojito</span>
+                            <span class="item-price">11</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add all other drinks similarly... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservations Section -->
+    <section class="section" id="reservations">
+        <div class="container">
+            <div class="section-title">
+                <h2>Make a Reservation</h2>
+                <p>Book your table for an unforgettable experience</p>
+            </div>
+            
+            <div class="reservation-form">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="time">Time</label>
+                    <input type="time" id="time" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="guests">Number of Guests</label>
+                    <select id="guests" required>
+                        <option value="">Select number of guests</option>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 People</option>
+                        <option value="3">3 People</option>
+                        <option value="4">4 People</option>
+                        <option value="5+">5+ People (Please call)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Special Requests</label>
+                    <textarea id="message" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Submit Reservation</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact" style="background-color: #f9f9f9;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>We'd love to hear from you</p>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Address</h3>
+                    <p>19 KG 599 St – Gishushu</p>
+                    <p>Kigali, Rwanda</p>
+                </div>
+                
+                <div class="contact-card">
+                    <i class="fas fa-phone"></i>
+                    <h3>Phone</h3>
+                    <p>+250 785 864 732</p>
+                </div>
+                
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <p>info@ytrestaurant.com</p>
+                </div>
+                
+                <div class="contact-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Hours</h3>
+                    <p>Mon-Thu: 11am-10pm</p>
+                    <p>Fri-Sat: 11am-11pm</p>
+                    <p>Sun: 12pm-9pm</p>
+                </div>
+            </div>
+            
+            <div class="map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.431225048614!2d30.09131431475722!3d-1.954298998560358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca5c9b4d23f7d%3A0x7e3e9d3c5b1d3d1e!2sGishushu%2C%20Kigali%2C%20Rwanda!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">Y & T</div>
+                    <p>Experience the finest cuisine and wines in Kigali at Y & T Restaurant & Bar.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-tripadvisor"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-hours">
+                    <h3>Hours of Operation</h3>
+                    <p>Monday - Thursday: 11:00 AM - 10:00 PM</p>
+                    <p>Friday - Saturday: 11:00 AM - 11:00 PM</p>
+                    <p>Sunday: 12:00 PM - 9:00 PM</p>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contact Info</h3>
+                    <p>19 KG 599 St – Gishushu, Kigali</p>
+                    <p>+250 785 864 732</p>
+                    <p>info@ytrestaurant.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Y & T Restaurant & Bar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hero Slider
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            let currentSlide = 0;
+            function showSlide(n) {
+                slides.forEach((slide, i) => slide.classList.toggle('active', i === n));
+                dots.forEach((dot, i) => dot.classList.toggle('active', i === n));
+                currentSlide = n;
+            }
+            setInterval(() => showSlide((currentSlide + 1) % slides.length), 5000);
+            dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+
+            // Smooth scrolling
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetSection = document.querySelector(this.getAttribute('href'));
+                    if (targetSection) targetSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Menu category filtering (event delegation)
+            const menuItems = document.querySelectorAll('.menu-item');
+            const categories = document.querySelector('.menu-categories');
+            categories.addEventListener('click', function(e) {
+                if (e.target.classList.contains('category-btn')) {
+                    document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    const category = e.target.textContent.trim();
+                    menuItems.forEach(item => {
+                        item.style.display = item.getAttribute('data-category') === category ? 'block' : 'none';
+                    });
+                }
+            });
+
+            // Reservation form
+            const reservationForm = document.querySelector('.reservation-form');
+            if (reservationForm) {
+                reservationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your reservation request! We will confirm shortly.');
+                    reservationForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
